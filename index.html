@@ -1,139 +1,108 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DVL Marketing – Bewirb dich jetzt</title>
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <title>Mini Shooter</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+      margin: 0 auto;
+      background: #222;
+    }
+  </style>
 </head>
-
 <body>
-  <!-- NAVIGATION -->
-  <nav class="nav">
-    <div class="container nav-flex">
-      <a href="#hero" class="logo">
-        <img src="logo.png" alt="DVL Marketing Logo" class="logo-img">
-      </a>
-      <ul class="nav-links">
-        <li><a href="#hero">Start</a></li>
-        <li><a href="#proof">Inside DVL</a></li>
-        <li><a href="#prozess">Prozess</a></li>
-        <li><a href="#apply">Bewerben</a></li>
-        <li><button id="modeBtn" aria-label="Farbschema umschalten">🌙</button></li>
-      </ul>
-    </div>
-  </nav>
+<canvas id="game" width="400" height="600"></canvas>
 
-  <!-- HERO (Full‑Viewport) -->
-  <header id="hero" class="hero reveal">
-    <div class="container">
-      <h1 class="mega">Dein neuer Job wartet.</h1>
-      <p class="lead">Verdiene groß. Lerne schnell. Wachse mit uns.</p>
-      <a href="#apply" class="btn-primary pulse">Bewirb dich jetzt</a>
-    </div>
-  </header>
+<script>
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
 
-  <!-- STATS -->
-  <section id="stats" class="section reveal">
-    <div class="container stats">
-      <div class="stat">
-        <span class="num" data-target="120">0</span>
-        <p>Neukunden / Monat</p>
-      </div>
-      <div class="stat">
-        <span class="num" data-target="98">0</span>
-        <p>% Zufriedenheit</p>
-      </div>
-      <div class="stat">
-        <span class="num" data-target="14">0</span>
-        <p>Standorte</p>
-      </div>
-    </div>
-  </section>
+let player = { x: 200, y: 550, width: 30, height: 20, speed: 5 };
+let bullets = [];
+let enemies = [];
+let score = 0;
+let leftPressed = false;
+let rightPressed = false;
+let spacePressed = false;
 
-  <!-- INSIDE DVL -->
-  <section id="proof" class="section alt reveal">
-    <div class="container">
-      <h2 class="section-title">Inside DVL</h2>
-      <div class="cards">
-        <article class="card">
-          <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=600&q=60"
-               alt="Jennifer – Team Lead">
-          <blockquote>„Hier lernst du Vertrieb, der wirklich Spaß macht.“</blockquote>
-          <p class="cite">— Jennifer, Team Lead</p>
-        </article>
-        <article class="card">
-          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=60"
-               alt="Lea – Recruiting">
-          <blockquote>„Jede Woche neue Challenges – kein Tag ist gleich.“</blockquote>
-          <p class="cite">— Lea, Recruiterin</p>
-        </article>
-        <article class="card">
-          <img src="img/maxi-trainee.jpg" alt="Max – Trainee">
-          <blockquote>„Gemeinsam wachsen wir schneller als allein.“</blockquote>
-          <p class="cite">— Max, Trainee</p>
-        </article>
-      </div>
-    </div>
-  </section>
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowLeft") leftPressed = true;
+  if (e.key === "ArrowRight") rightPressed = true;
+  if (e.key === " ") spacePressed = true;
+});
+document.addEventListener("keyup", (e) => {
+  if (e.key === "ArrowLeft") leftPressed = false;
+  if (e.key === "ArrowRight") rightPressed = false;
+  if (e.key === " ") spacePressed = false;
+});
 
-  <!-- PROZESS -->
-  <section id="prozess" class="section dark reveal">
-    <div class="container">
-      <h2 class="section-title">Recruiting‑Prozess</h2>
-      <ol class="timeline">
-        <li><strong>1‑Minute‑Bewerbung:</strong> Formular ausfüllen, absenden – done.</li>
-        <li><strong>WhatsApp‑Call (24 h):</strong> Kurz‑Check & Termin vereinbaren.</li>
-        <li><strong>Online‑Interview (30 min):</strong> Deine Ziele, unser Job.</li>
-        <li><strong>Schnupper‑Tag:</strong> Einen halben Tag live dabei sein.</li>
-        <li><strong>Vertrag & Onboarding:</strong> Digital unterschreiben und loslegen.</li>
-      </ol>
-    </div>
-  </section>
+function spawnEnemy() {
+  const x = Math.random() * (canvas.width - 30);
+  enemies.push({ x, y: 0, width: 30, height: 20, speed: 2 });
+}
 
-  <!-- BENEFITS -->
-  <section class="section dark reveal">
-    <div class="container benefits">
-      <h2 class="section-title">Was dich erwartet</h2>
-      <div class="benefit-grid">
-        <div><h3>💸 Top‑Verdienst</h3><p>Fixum + Boni, die sich lohnen.</p></div>
-        <div><h3>🚀 Karriere</h3><p>Vom Rookie zum Teamleiter in Monaten.</p></div>
-        <div><h3>🎯 Coaching</h3><p>Daily Feedback & persönliches Mentoring.</p></div>
-      </div>
-    </div>
-  </section>
+function update() {
+  if (leftPressed) player.x -= player.speed;
+  if (rightPressed) player.x += player.speed;
 
-  <!-- BEWERBUNG -->
-  <section id="apply" class="section reveal">
-    <div class="container">
-      <h2 class="section-title">1‑Minute‑Bewerbung</h2>
-      <form class="apply-form"
-            action="https://formspree.io/f/mjkyndby"
-            method="POST">
-        <input type="text"   name="name"  placeholder="Vor‑ & Nachname*" required>
-        <input type="tel"    name="phone" placeholder="Handy*"           required>
-        <input type="email"  name="email" placeholder="E‑Mail*"          required>
-        <input type="hidden" name="_subject" value="Neue Bewerbung von {name}">
-        <input type="hidden" name="_next"    value="danke.html">
-        <button type="submit" class="btn-primary full">Abschicken →</button>
-        <small>Pflichtfelder *</small>
-      </form>
-      <p class="hint">Kein Lebenslauf nötig – wir melden uns innerhalb von 24 h.</p>
-    </div>
-  </section>
+  player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      © 2025 DVL Marketing · Alle Rechte vorbehalten
-    </div>
-  </footer>
+  if (spacePressed && bullets.length < 5) {
+    bullets.push({ x: player.x + player.width / 2 - 2, y: player.y, width: 4, height: 10, speed: 6 });
+  }
 
-  <!-- Back‑to‑Top -->
-  <button id="toTop" aria-label="Nach oben">⇡</button>
+  bullets.forEach(b => b.y -= b.speed);
+  bullets = bullets.filter(b => b.y > 0);
+
+  enemies.forEach(e => e.y += e.speed);
+
+  enemies = enemies.filter(e => e.y < canvas.height);
+
+  for (let i = bullets.length - 1; i >= 0; i--) {
+    for (let j = enemies.length - 1; j >= 0; j--) {
+      const b = bullets[i], e = enemies[j];
+      if (b.x < e.x + e.width && b.x + b.width > e.x &&
+          b.y < e.y + e.height && b.y + b.height > e.y) {
+        bullets.splice(i, 1);
+        enemies.splice(j, 1);
+        score += 10;
+        break;
+      }
+    }
+  }
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "white";
+  ctx.fillRect(player.x, player.y, player.width, player.height);
+
+  ctx.fillStyle = "red";
+  bullets.forEach(b => ctx.fillRect(b.x, b.y, b.width, b.height));
+
+  ctx.fillStyle = "lime";
+  enemies.forEach(e => ctx.fillRect(e.x, e.y, e.width, e.height));
+
+  ctx.fillStyle = "white";
+  ctx.font = "16px Arial";
+  ctx.fillText("Score: " + score, 10, 20);
+}
+
+function gameLoop() {
+  update();
+  draw();
+  requestAnimationFrame(gameLoop);
+}
+
+setInterval(spawnEnemy, 1000);
+gameLoop();
+</script>
 </body>
 </html>
