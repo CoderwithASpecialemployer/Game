@@ -12,7 +12,11 @@ const matchSound = document.getElementById("match-sound");
 
 function renderCard() {
   cardContainer.innerHTML = "";
-  if (currentIndex >= profiles.length) return;
+
+  if (currentIndex >= profiles.length) {
+    cardContainer.innerHTML = "<p>Keine weiteren Profile verfügbar.</p>";
+    return;
+  }
 
   const profile = profiles[currentIndex];
   const card = document.createElement("div");
@@ -40,7 +44,8 @@ function dislike() {
 }
 
 function simulateMatch() {
-  if (currentIndex % 2 === 1) {
+  const chance = Math.random();
+  if (chance < 0.4) { // 40% Match-Chance
     matchPopup.classList.remove("hidden");
     matchSound.play();
   }
