@@ -2,11 +2,15 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Temple Runner</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Temple Runner - Jungle</title>
+  <link rel="stylesheet" href="styles/style.css">
 </head>
-<body> 
-  <canvas id="game" width="600" height="400"></canvas>
-  <script src="game.js"></script>
+<body>
+  <div id="menu">
+    <h1>Temple Runner</h1>
+    <button onclick="startGame()">Start</button>
+  </div>
+  <canvas id="game" width="800" height="450" style="display:none;"></canvas>
+  <script src="scripts/game.js"></script>
 </body>
 </html>
