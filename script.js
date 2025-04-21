@@ -1,62 +1,23 @@
-// Dark Mode Toggle mit Speicherung
-const modeBtn = document.getElementById("modeBtn");
-const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-const storedTheme = localStorage.getItem("theme");
-if (storedTheme === "dark" || (!storedTheme && prefersDark)) {
-  enableDark();
-} else {
-  disableDark();
-}
-modeBtn.addEventListener("click", () => {
-  document.body.classList.contains("dark") ? disableDark() : enableDark();
-});
-function enableDark() {
-  document.body.classList.add("dark");
-  modeBtn.textContent = "☀️";
-  localStorage.setItem("theme", "dark");
-}
-function disableDark() {
-  document.body.classList.remove("dark");
-  modeBtn.textContent = "🌙";
-  localStorage.setItem("theme", "light");
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #000;
+  color: #fff;
+  text-align: center;
 }
 
-// Scroll‑Reveal Animation
-const revealEls = document.querySelectorAll(".reveal");
-function handleReveal() {
-  const winH = window.innerHeight;
-  revealEls.forEach(el => {
-    if (el.getBoundingClientRect().top < winH - 100) {
-      el.classList.add("visible");
-    }
-  });
+#menu {
+  margin-top: 100px;
 }
-window.addEventListener("scroll", handleReveal);
-window.addEventListener("load", handleReveal);
 
-// Back‑to‑Top Button
-const toTop = document.getElementById("toTop");
-window.addEventListener("scroll", () => {
-  toTop.style.display = window.scrollY > 300 ? "flex" : "none";
-});
-toTop.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+button {
+  font-size: 24px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
 
-// Stats Counter
-window.addEventListener("load", () => {
-  document.querySelectorAll(".num").forEach(counter => {
-    const target = +counter.dataset.target;
-    const step = target / 50;
-    const update = () => {
-      const current = +counter.innerText;
-      if (current < target) {
-        counter.innerText = Math.ceil(current + step);
-        setTimeout(update, 40);
-      } else {
-        counter.innerText = target;
-      }
-    };
-    update();
-  });
-});
+canvas {
+  display: block;
+  margin: 0 auto;
+  background: linear-gradient(#3a3, #050);
+}
