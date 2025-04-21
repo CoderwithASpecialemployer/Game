@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DVL Marketing – Bewirb dich jetzt</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <div class="container nav-flex">
+      <a href="#hero" class="logo">
+        <img src="logo.png" alt="DVL Marketing Logo" class="logo-img">
+      </a>
+      <ul class="nav-links">
+        <li><a href="#hero">Start</a></li>
+        <li><a href="#proof">Inside DVL</a></li>
+        <li><a href="#prozess">Prozess</a></li>
+        <li><a href="#apply">Bewerben</a></li>
+        <li><button id="modeBtn" aria-label="Farbschema umschalten">🌙</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO (Full‑Viewport) -->
+  <header id="hero" class="hero reveal">
+    <div class="container">
+      <h1 class="mega">Dein neuer Job wartet.</h1>
+      <p class="lead">Verdiene groß. Lerne schnell. Wachse mit uns.</p>
+      <a href="#apply" class="btn-primary pulse">Bewirb dich jetzt</a>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <section id="stats" class="section reveal">
+    <div class="container stats">
+      <div class="stat">
+        <span class="num" data-target="120">0</span>
+        <p>Neukunden / Monat</p>
+      </div>
+      <div class="stat">
+        <span class="num" data-target="98">0</span>
+        <p>% Zufriedenheit</p>
+      </div>
+      <div class="stat">
+        <span class="num" data-target="14">0</span>
+        <p>Standorte</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSIDE DVL -->
+  <section id="proof" class="section alt reveal">
+    <div class="container">
+      <h2 class="section-title">Inside DVL</h2>
+      <div class="cards">
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=600&q=60"
+               alt="Jennifer – Team Lead">
+          <blockquote>„Hier lernst du Vertrieb, der wirklich Spaß macht.“</blockquote>
+          <p class="cite">— Jennifer, Team Lead</p>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=60"
+               alt="Lea – Recruiting">
+          <blockquote>„Jede Woche neue Challenges – kein Tag ist gleich.“</blockquote>
+          <p class="cite">— Lea, Recruiterin</p>
+        </article>
+        <article class="card">
+          <img src="img/maxi-trainee.jpg" alt="Max – Trainee">
+          <blockquote>„Gemeinsam wachsen wir schneller als allein.“</blockquote>
+          <p class="cite">— Max, Trainee</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROZESS -->
+  <section id="prozess" class="section dark reveal">
+    <div class="container">
+      <h2 class="section-title">Recruiting‑Prozess</h2>
+      <ol class="timeline">
+        <li><strong>1‑Minute‑Bewerbung:</strong> Formular ausfüllen, absenden – done.</li>
+        <li><strong>WhatsApp‑Call (24 h):</strong> Kurz‑Check & Termin vereinbaren.</li>
+        <li><strong>Online‑Interview (30 min):</strong> Deine Ziele, unser Job.</li>
+        <li><strong>Schnupper‑Tag:</strong> Einen halben Tag live dabei sein.</li>
+        <li><strong>Vertrag & Onboarding:</strong> Digital unterschreiben und loslegen.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section class="section dark reveal">
+    <div class="container benefits">
+      <h2 class="section-title">Was dich erwartet</h2>
+      <div class="benefit-grid">
+        <div><h3>💸 Top‑Verdienst</h3><p>Fixum + Boni, die sich lohnen.</p></div>
+        <div><h3>🚀 Karriere</h3><p>Vom Rookie zum Teamleiter in Monaten.</p></div>
+        <div><h3>🎯 Coaching</h3><p>Daily Feedback & persönliches Mentoring.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEWERBUNG -->
+  <section id="apply" class="section reveal">
+    <div class="container">
+      <h2 class="section-title">1‑Minute‑Bewerbung</h2>
+      <form class="apply-form"
+            action="https://formspree.io/f/mjkyndby"
+            method="POST">
+        <input type="text"   name="name"  placeholder="Vor‑ & Nachname*" required>
+        <input type="tel"    name="phone" placeholder="Handy*"           required>
+        <input type="email"  name="email" placeholder="E‑Mail*"          required>
+        <input type="hidden" name="_subject" value="Neue Bewerbung von {name}">
+        <input type="hidden" name="_next"    value="danke.html">
+        <button type="submit" class="btn-primary full">Abschicken →</button>
+        <small>Pflichtfelder *</small>
+      </form>
+      <p class="hint">Kein Lebenslauf nötig – wir melden uns innerhalb von 24 h.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      © 2025 DVL Marketing · Alle Rechte vorbehalten
+    </div>
+  </footer>
+
+  <!-- Back‑to‑Top -->
+  <button id="toTop" aria-label="Nach oben">⇡</button>
+</body>
+</html>
