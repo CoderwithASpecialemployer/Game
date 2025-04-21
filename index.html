@@ -2,15 +2,23 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Temple Runner - Jungle</title>
-  <link rel="stylesheet" href="styles/style.css">
+  <title>FlirtyPlay</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="menu">
-    <h1>Temple Runner</h1>
-    <button onclick="startGame()">Start</button>
+  <div id="app">
+    <h1>FlirtyPlay</h1>
+    <div id="card-container"></div>
+    <div class="buttons">
+      <button onclick="dislike()">Nope</button>
+      <button onclick="like()">Like</button>
+    </div>
+    <div id="match-popup" class="hidden">
+      <p>It's a match!</p>
+      <button onclick="closeMatch()">Chat starten</button>
+    </div>
   </div>
-  <canvas id="game" width="800" height="450" style="display:none;"></canvas>
-  <script src="scripts/game.js"></script> 
+  <audio id="match-sound" src="assets/sounds/match.mp3"></audio>
+  <script src="app.js"></script>
 </body>
 </html>
