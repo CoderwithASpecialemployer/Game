@@ -2,22 +2,48 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Mini Shooter</title>
+  <title>Shooter Touch</title>
   <style>
     body {
       margin: 0;
       background: #111;
       overflow: hidden;
+      font-family: sans-serif;
     }
     canvas {
       display: block;
       margin: 0 auto;
       background: #222;
     }
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .btn {
+      background: #444;
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      font-size: 18px;
+      border-radius: 8px;
+      touch-action: manipulation;
+    }
+    .btn:active {
+      background: #666;
+    }
   </style>
 </head>
 <body>
+
 <canvas id="game" width="400" height="600"></canvas>
+
+<div class="controls">
+  <button class="btn" id="left">◀ Links</button>
+  <button class="btn" id="fire">Feuer</button>
+  <button class="btn" id="right">Rechts ▶</button>
+</div>
 
 <script>
 const canvas = document.getElementById('game');
@@ -27,20 +53,8 @@ let player = { x: 200, y: 550, width: 30, height: 20, speed: 5 };
 let bullets = [];
 let enemies = [];
 let score = 0;
-let leftPressed = false;
-let rightPressed = false;
-let spacePressed = false;
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft") leftPressed = true;
-  if (e.key === "ArrowRight") rightPressed = true;
-  if (e.key === " ") spacePressed = true;
-});
-document.addEventListener("keyup", (e) => {
-  if (e.key === "ArrowLeft") leftPressed = false;
-  if (e.key === "ArrowRight") rightPressed = false;
-  if (e.key === " ") spacePressed = false;
-});
+let moveLeft = false;
+let moveRight = false;
 
 function spawnEnemy() {
   const x = Math.random() * (canvas.width - 30);
@@ -48,20 +62,15 @@ function spawnEnemy() {
 }
 
 function update() {
-  if (leftPressed) player.x -= player.speed;
-  if (rightPressed) player.x += player.speed;
+  if (moveLeft) player.x -= player.speed;
+  if (moveRight) player.x += player.speed;
 
   player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
-
-  if (spacePressed && bullets.length < 5) {
-    bullets.push({ x: player.x + player.width / 2 - 2, y: player.y, width: 4, height: 10, speed: 6 });
-  }
 
   bullets.forEach(b => b.y -= b.speed);
   bullets = bullets.filter(b => b.y > 0);
 
   enemies.forEach(e => e.y += e.speed);
-
   enemies = enemies.filter(e => e.y < canvas.height);
 
   for (let i = bullets.length - 1; i >= 0; i--) {
@@ -103,6 +112,30 @@ function gameLoop() {
 
 setInterval(spawnEnemy, 1000);
 gameLoop();
+
+// Touch Buttons
+const btnLeft = document.getElementById('left');
+const btnRight = document.getElementById('right');
+const btnFire = document.getElementById('fire');
+
+btnLeft.addEventListener('touchstart', () => moveLeft = true);
+btnLeft.addEventListener('touchend', () => moveLeft = false);
+
+btnRight.addEventListener('touchstart', () => moveRight = true);
+btnRight.addEventListener('touchend', () => moveRight = false);
+
+btnFire.addEventListener('touchstart', () => {
+  if (bullets.length < 5) {
+    bullets.push({
+      x: player.x + player.width / 2 - 2,
+      y: player.y,
+      width: 4,
+      height: 10,
+      speed: 6
+    });
+  }
+});
 </script>
+
 </body>
 </html>
